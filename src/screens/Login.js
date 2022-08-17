@@ -2,15 +2,15 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
+  Image,
+  ImageBackground,
+  Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
-  ImageBackground,
-  Image,
-  View,
   TextInput,
-  Alert,
-  SafeAreaView,
-  Pressable,
+  View,
 } from 'react-native';
 
 import Animated from 'react-native-reanimated';
@@ -508,164 +508,155 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={{
-          uri: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        }}
-        resizeMode="cover"
-        imageStyle={{opacity: 0.7}}
-        style={{width: '100%', flex: 1, justifyContent: 'center'}}>
-        <BottomSheet
-          ref={sheetRef}
-          snapPoints={[520, 300, 0]}
-          renderHeader={renderModalHeader}
-          renderContent={renderContent}
-          initialSnap={1}
-          enabledGestureInteraction={true}
-        />
-        <BottomSheet
-          ref={sheetRefLogin}
-          snapPoints={[450, 300, 0]}
-          renderHeader={renderModalHeader}
-          renderContent={renderContentLogin}
-          initialSnap={1}
-          enabledGestureInteraction={true}
-        />
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[520, 300, 0]}
+        renderHeader={renderModalHeader}
+        renderContent={renderContent}
+        initialSnap={1}
+        enabledGestureInteraction={true}
+      />
+      <BottomSheet
+        ref={sheetRefLogin}
+        snapPoints={[450, 300, 0]}
+        renderHeader={renderModalHeader}
+        renderContent={renderContentLogin}
+        initialSnap={1}
+        enabledGestureInteraction={true}
+      />
 
-        <View style={styles.containerLogo}>
-          {networkInfo && <OfflineNotice />}
-          <ImageBackground
-            source={{
-              uri: 'https://previews.123rf.com/images/catarchangel/catarchangel1506/catarchangel150600488/41410425-sketch-of-foods-utensils-and-kitchen-equipment-hand-drawn-vector-illustration.jpg',
+      <View style={styles.containerLogo}>
+        {networkInfo && <OfflineNotice />}
+        <ImageBackground
+          source={{
+            uri: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
+          }}
+          resizeMode="cover"
+          imageStyle={{opacity: 0.3, borderRadius: 30}}
+          style={{
+            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Image style={styles.imageLogo} source={Logo} resizeMode="contain" />
+        </ImageBackground>
+      </View>
+
+      <View style={styles.containerLogin}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <SocialButton
+            buttonTitle={I18n.t('login')}
+            btnType="sign-in"
+            color={colors.orange}
+            myBgColor="#f5e7ea"
+            myBorderColor={colors.orange}
+            width="40%"
+            onPress={() => sheetRefLogin.current.snapTo(0)}
+          />
+
+          <SocialButton
+            buttonTitle={I18n.t('register')}
+            btnType="sign-in"
+            color={colors.orange}
+            myBgColor="#f5e7ea"
+            myBorderColor={colors.orange}
+            width="40%"
+            onPress={() => sheetRef.current.snapTo(0)}
+          />
+        </View>
+
+        <View>
+          <SocialButton
+            buttonTitle={I18n.t('button_enter_without_login')}
+            btnType="sign-in"
+            color={colors.orange}
+            myBgColor="#f5e7ea"
+            myBorderColor={colors.orange}
+            width="80%"
+            onPress={() => {
+              navigation.navigate('Index');
             }}
-            resizeMode="cover"
-            imageStyle={{opacity: 0.3, borderRadius: 30}}
-            style={{
-              width: '100%',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              style={styles.imageLogo}
-              source={Logo}
-              resizeMode="contain"
-            />
-          </ImageBackground>
+          />
         </View>
-
-        <View style={styles.containerLogin}>
-          <View
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderWidth: 0.5,
+            borderColor: colors.orange,
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            marginTop: -30,
+            borderRadius: 20,
+            padding: 15,
+          }}>
+          <FontAwesomeIcon
+            icon={faLanguage}
+            size={30}
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <SocialButton
-              buttonTitle={I18n.t('login')}
-              btnType="sign-in"
-              color={colors.orange}
-              backgroundColor="#f5e7ea"
-              width="40%"
-              onPress={() => sheetRefLogin.current.snapTo(0)}
-            />
+              marginRight: 40,
+              color: colors.orange,
+            }}
+          />
 
-            <SocialButton
-              buttonTitle={I18n.t('register')}
-              btnType="sign-in"
-              color={colors.orange}
-              backgroundColor="#f5e7ea"
-              width="40%"
-              onPress={() => sheetRef.current.snapTo(0)}
-            />
-          </View>
-
-          <View>
-            <SocialButton
-              buttonTitle={I18n.t('button_enter_without_login')}
-              btnType="sign-in"
-              color={colors.orange}
-              backgroundColor="#f5e7ea"
-              width="80%"
-              onPress={() => {
-                navigation.navigate('Index');
-              }}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 0.5,
-              borderColor: colors.orange,
-              backgroundColor: 'rgba(255,255,255,0.9)',
-              marginTop: -30,
-              borderRadius: 20,
-              padding: 15,
+          <Pressable
+            onPress={() => {
+              Alert.alert(
+                'Language Selection',
+                'Multi language support',
+                [
+                  {
+                    text: 'French',
+                    onPress: () => {
+                      I18n.locale = 'fr-Us';
+                      setLanguage({changeLanguage: 'French'});
+                      AsyncStorage.setItem('language', 'fr');
+                    },
+                  },
+                  {
+                    text: 'English',
+                    onPress: () => {
+                      I18n.locale = 'en-Us';
+                      setLanguage({changeLanguage: 'English'});
+                      AsyncStorage.setItem('language', 'en');
+                    },
+                  },
+                  {
+                    text: 'Arabic',
+                    onPress: () => {
+                      I18n.locale = 'ar-Us';
+                      setLanguage({changeLanguage: 'arabic'});
+                      AsyncStorage.setItem('language', 'ar');
+                    },
+                  },
+                  {
+                    text: 'Cancel',
+                    onPress: () => {
+                      console.log('Cancel Pressed');
+                    },
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+              );
             }}>
-            <FontAwesomeIcon
-              icon={faLanguage}
-              size={30}
+            <Text
               style={{
-                marginRight: 40,
-                color: colors.orange,
-              }}
-            />
-
-            <Pressable
-              onPress={() => {
-                Alert.alert(
-                  'Language Selection',
-                  'Multi language support',
-                  [
-                    {
-                      text: 'French',
-                      onPress: () => {
-                        I18n.locale = 'fr-Us';
-                        setLanguage({changeLanguage: 'French'});
-                        AsyncStorage.setItem('language', 'fr');
-                      },
-                    },
-                    {
-                      text: 'English',
-                      onPress: () => {
-                        I18n.locale = 'en-Us';
-                        setLanguage({changeLanguage: 'English'});
-                        AsyncStorage.setItem('language', 'en');
-                      },
-                    },
-                    {
-                      text: 'Arabic',
-                      onPress: () => {
-                        I18n.locale = 'ar-Us';
-                        setLanguage({changeLanguage: 'arabic'});
-                        AsyncStorage.setItem('language', 'ar');
-                      },
-                    },
-                    {
-                      text: 'Cancel',
-                      onPress: () => {
-                        console.log('Cancel Pressed');
-                      },
-                      style: 'cancel',
-                    },
-                  ],
-                  {cancelable: false},
-                );
+                fontWeight: 'bold',
+                fontSize: 18,
+                lineHeight: 21,
+                color: colors.black,
               }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                  lineHeight: 21,
-                  color: colors.black,
-                }}>
-                {I18n.t('button_change_language')}
-              </Text>
-            </Pressable>
-          </View>
+              {I18n.t('button_change_language')}
+            </Text>
+          </Pressable>
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 };
