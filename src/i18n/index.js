@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import I18n, {getLanguages} from 'react-native-i18n';
+import I18n from 'react-native-i18n';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,9 +15,9 @@ I18n.translations = {
 };
 
 AsyncStorage.getItem('language').then(res => {
-  console.warn('lanng:'+res)
-  I18n.locale = `${res}-Us`
-})
+  // console.warn('lanng:'+res)
+  I18n.locale = `${res}-Us`;
+});
 
 // getLanguages()
 //   .then(languages => {

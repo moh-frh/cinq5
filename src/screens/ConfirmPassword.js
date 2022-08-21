@@ -5,20 +5,23 @@ import colors from '@app/assets/colors/colors';
 import LogoPassConfirm from '@app/assets/icons/LogoPassConfirm.png';
 import API_URL from '@app/env';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Image,
-  ImageBackground, Pressable, Text,
-  TextInput, View
+  ImageBackground,
+  Pressable,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 const ConfirmPassword = ({route, navigation}) => {
   const {user_id} = route.params;
-  console.warn(user_id)
+  console.warn(user_id);
   // console.warn(route);
   const [confirmCode, setConfirmCode] = useState('');
   return (
-    <View style={{flex: 1, padding: 40, justifyContent: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'center'}}>
       <ImageBackground
         source={{
           uri: 'https://previews.123rf.com/images/catarchangel/catarchangel1506/catarchangel150600488/41410425-sketch-of-foods-utensils-and-kitchen-equipment-hand-drawn-vector-illustration.jpg',
@@ -58,10 +61,7 @@ const ConfirmPassword = ({route, navigation}) => {
             }}
             onPress={() =>
               axios
-                .get(
-                  API_URL +
-                    `/verify/${confirmCode}-${user_id}`,
-                )
+                .get(API_URL + `/verify/${confirmCode}-${user_id}`)
                 // do if/else of res.status
                 .then(res => navigation.navigate('Index'))
             }>
@@ -74,7 +74,7 @@ const ConfirmPassword = ({route, navigation}) => {
               padding: 10,
               alignItems: 'center',
             }}
-            onPress={() => navigation.navigate('Index')}>
+            onPress={() => navigation.navigate('Login')}>
             <Text style={{color: colors.white}}>
               Continue without verifying
             </Text>

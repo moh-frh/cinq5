@@ -15,23 +15,24 @@ import {
 
 import Animated from 'react-native-reanimated';
 
+import {faLanguage} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomSheet from 'reanimated-bottom-sheet';
 
-import {faLanguage} from '@fortawesome/free-solid-svg-icons';
+import colors from '@app/assets/colors/colors';
+import Logo from '@app/assets/images/logo2.png';
 
-import colors from '../assets/colors/colors';
-import Logo from '../assets/images/logo2.png';
+import back1 from '@app/assets/images/back1.jpg';
+import back2 from '@app/assets/images/back2.jpg';
 
-import I18n from '../i18n';
+import I18n from '@app/i18n';
 
+import {API_URL} from '@app/env';
 import axios from 'axios';
-import API_URL from '../env';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
-import SocialButton from './../components/SocialButton';
+import SocialButton from '@app/components/SocialButton';
 
 // import NetInfo from '@react-native-community/netinfo';
 import OfflineNotice from './OfflineNotice';
@@ -47,16 +48,16 @@ const Login = ({navigation}) => {
 
   const [networkInfo, setnetworkInfo] = useState();
 
-  const sheetRef = React.useRef(0);
+  const sheetRefRegister = React.useRef(0);
   const sheetRefLogin = React.useRef(0);
 
   useEffect(() => {
     // checkNetwork();
 
-    sheetRef.current.snapTo(2);
+    sheetRefRegister.current.snapTo(2);
     sheetRefLogin.current.snapTo(2);
 
-    console.warn(networkInfo);
+    // console.warn(networkInfo);
   }, [networkInfo]);
 
   // languages :::::::::::::::::
@@ -74,9 +75,7 @@ const Login = ({navigation}) => {
   const renderContent = () => (
     <View style={{backgroundColor: 'white'}}>
       <ImageBackground
-        source={{
-          uri: 'https://previews.123rf.com/images/catarchangel/catarchangel1506/catarchangel150600488/41410425-sketch-of-foods-utensils-and-kitchen-equipment-hand-drawn-vector-illustration.jpg',
-        }}
+        source={back2}
         resizeMode="cover"
         imageStyle={{opacity: 0.1}}
         style={{width: '100%'}}>
@@ -120,6 +119,7 @@ const Login = ({navigation}) => {
                   }}>
                   <TextInput
                     placeholder="mohamed"
+                    autoCapitalize="none"
                     style={styles.textInput}
                     onChangeText={text => setName(text)}
                   />
@@ -153,6 +153,7 @@ const Login = ({navigation}) => {
                   <TextInput
                     placeholder="mohamed@gmail.com"
                     style={styles.textInput}
+                    autoCapitalize="none"
                     onChangeText={text => setEmail(text)}
                   />
                 </View>
@@ -212,6 +213,7 @@ const Login = ({navigation}) => {
                   <TextInput
                     placeholder="********"
                     style={styles.textInput}
+                    autoCapitalize="none"
                     onChangeText={text => setPassword(text)}
                   />
                 </View>
@@ -229,7 +231,7 @@ const Login = ({navigation}) => {
             }}>
             <Pressable
               style={{width: '50%', padding: 10}}
-              onPress={() => sheetRef.current.snapTo(2)}>
+              onPress={() => sheetRefRegister.current.snapTo(2)}>
               <Text
                 style={{
                   color: colors.darkGrey,
@@ -250,7 +252,6 @@ const Login = ({navigation}) => {
                 alignItems: 'center',
               }}
               onPress={() =>
-                // navigation.navigate('ConfirmPassword')
                 axios.get(API_URL + '/csrf_token').then(csrf => {
                   let token = csrf.data;
                   axios({
@@ -265,15 +266,19 @@ const Login = ({navigation}) => {
                     },
                   })
                     .then(res => {
-                      console.warn(res);
-                      res.status === 200
-                        ? navigation.navigate('ConfirmPassword', {
+                      // console.warn('-------------------------------------');
+                      // console.warn(res.data);
+                      // console.warn('--------------------------');
+
+                      res.status === 201
+                        ? (navigation.navigate('ConfirmPassword', {
                             user_id: res.data,
-                          })
-                        : console.warn('error');
+                          }),
+                          AsyncStorage.setItem('user_logged_id', res.data))
+                        : console.warn('**************** error [register]');
                     })
                     .catch(function (response) {
-                      console.log(response);
+                      console.warn('**************** error [register]');
                     });
                 })
               }>
@@ -290,9 +295,7 @@ const Login = ({navigation}) => {
   const renderContentLogin = () => (
     <View style={{backgroundColor: 'white'}}>
       <ImageBackground
-        source={{
-          uri: 'https://previews.123rf.com/images/catarchangel/catarchangel1506/catarchangel150600488/41410425-sketch-of-foods-utensils-and-kitchen-equipment-hand-drawn-vector-illustration.jpg',
-        }}
+        source={back2}
         resizeMode="cover"
         imageStyle={{opacity: 0.1}}
         style={{width: '100%'}}>
@@ -304,16 +307,6 @@ const Login = ({navigation}) => {
             height: '100%',
             padding: '0%',
           }}>
-          {/* <View>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: colors.orange,
-              }}>
-              {I18n.t('login')}
-            </Text>
-          </View> */}
           <View>
             <SafeAreaView style={{flexDirection: 'column', width: '100%'}}>
               <View
@@ -337,6 +330,7 @@ const Login = ({navigation}) => {
                   <TextInput
                     placeholder="mohamed@gmail.com"
                     style={styles.textInput}
+                    autoCapitalize="none"
                     onChangeText={text => setEmailLogin(text)}
                   />
                 </View>
@@ -365,6 +359,7 @@ const Login = ({navigation}) => {
                   <TextInput
                     placeholder="********"
                     style={styles.textInput}
+                    autoCapitalize="none"
                     onChangeText={text => setPasswordLogin(text)}
                   />
                 </View>
@@ -435,11 +430,13 @@ const Login = ({navigation}) => {
               onPress={() => {
                 axios.get(API_URL + '/csrf_token').then(csrf => {
                   let token = csrf.data;
-                  console.warn('token :', token);
+                  console.warn(
+                    '********************************************** token :',
+                    token,
+                  );
                   axios({
                     method: 'post',
                     url:
-                      // /login?name=mohamed&token=mohamed2&email=mohamed@wassfast.dz&sexe=M&_token=M1Q0tbRi5CWHyXUE7NUZlo3y1wb8gmsD4M9QkEoy&social=LC
                       API_URL +
                       `/login?token=${passwordLogin}&email=${emailLogin}&sexe=${sexeLogin}&_token=${token}&social=LC`,
                     headers: {
@@ -449,6 +446,13 @@ const Login = ({navigation}) => {
                   })
                     .then(res => {
                       // navigation.navigate('Index')
+                      console.log(
+                        'login ************************************************************************',
+                      );
+                      console.log(res);
+                      console.log(
+                        'login ************************************************************************',
+                      );
                       res.data !== 'email or password incorrect'
                         ? // console.warn(res.data)
                           AsyncStorage.setItem(
@@ -509,7 +513,7 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.container}>
       <BottomSheet
-        ref={sheetRef}
+        ref={sheetRefRegister}
         snapPoints={[520, 300, 0]}
         renderHeader={renderModalHeader}
         renderContent={renderContent}
@@ -528,10 +532,9 @@ const Login = ({navigation}) => {
       <View style={styles.containerLogo}>
         {networkInfo && <OfflineNotice />}
         <ImageBackground
-          source={{
-            uri: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-          }}
+          source={back1}
           resizeMode="cover"
+          blurRadius={4}
           imageStyle={{opacity: 0.3, borderRadius: 30}}
           style={{
             width: '100%',
@@ -544,6 +547,19 @@ const Login = ({navigation}) => {
       </View>
 
       <View style={styles.containerLogin}>
+        <View style={{marginBottom: '10%'}}>
+          <Text
+            style={{
+              color: colors.darkGrey,
+              fontSize: 25,
+              paddingBottom: 20,
+              fontWeight: 'bold',
+              borderBottomWidth: 1,
+              borderBottomColor: colors.lightOrange,
+            }}>
+            hey, welcome to <Text style={{color: colors.orange}}>`cinq5`</Text>
+          </Text>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -559,22 +575,22 @@ const Login = ({navigation}) => {
             width="40%"
             onPress={() => sheetRefLogin.current.snapTo(0)}
           />
-
+          <Text style={{color: colors.darkGrey}}>or</Text>
           <SocialButton
             buttonTitle={I18n.t('register')}
-            btnType="sign-in"
+            btnType="user-circle-o"
             color={colors.orange}
             myBgColor="#f5e7ea"
             myBorderColor={colors.orange}
             width="40%"
-            onPress={() => sheetRef.current.snapTo(0)}
+            onPress={() => sheetRefRegister.current.snapTo(0)}
           />
         </View>
 
         <View>
           <SocialButton
             buttonTitle={I18n.t('button_enter_without_login')}
-            btnType="sign-in"
+            btnType="home"
             color={colors.orange}
             myBgColor="#f5e7ea"
             myBorderColor={colors.orange}
@@ -591,19 +607,10 @@ const Login = ({navigation}) => {
             borderWidth: 0.5,
             borderColor: colors.orange,
             backgroundColor: 'rgba(255,255,255,0.9)',
-            marginTop: -30,
             borderRadius: 20,
             padding: 15,
+            margin: 5,
           }}>
-          <FontAwesomeIcon
-            icon={faLanguage}
-            size={30}
-            style={{
-              marginRight: 40,
-              color: colors.orange,
-            }}
-          />
-
           <Pressable
             onPress={() => {
               Alert.alert(
@@ -645,7 +652,15 @@ const Login = ({navigation}) => {
                 {cancelable: false},
               );
             }}>
-            <Text
+            <FontAwesomeIcon
+              icon={faLanguage}
+              size={30}
+              style={{
+                // marginRight: 40,
+                color: colors.orange,
+              }}
+            />
+            {/* <Text
               style={{
                 fontWeight: 'bold',
                 fontSize: 18,
@@ -653,7 +668,7 @@ const Login = ({navigation}) => {
                 color: colors.black,
               }}>
               {I18n.t('button_change_language')}
-            </Text>
+            </Text> */}
           </Pressable>
         </View>
       </View>
@@ -663,7 +678,7 @@ const Login = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.grey,
+    backgroundColor: colors.white,
 
     flexDirection: 'column',
     alignItems: 'center',
@@ -682,7 +697,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '50%',
-    paddingTop: '15%',
+    paddingTop: '10%',
   },
   imageLogo: {
     height: '80%',

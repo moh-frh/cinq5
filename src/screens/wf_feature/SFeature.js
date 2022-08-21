@@ -1,11 +1,15 @@
 /* eslint-disable prettier/prettier */
 import colors from '@app/assets/colors/colors';
-import { SIZES } from '@app/assets/constants';
-import { xorBy } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {SIZES} from '@app/assets/constants';
+import {xorBy} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
-  ImageBackground, Pressable, SafeAreaView, StyleSheet, Text,
-  View
+  ImageBackground,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import SelectBox from 'react-native-multi-selectbox';
 
@@ -15,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Loader from '@app/screens/Loader';
 
-import API_URL from '@app/env';
+import {API_URL} from '@app/env';
 import axios from 'axios';
 
 import Header from '@app/components/Header';
@@ -114,9 +118,9 @@ const SFeature = ({navigation}) => {
           onPress={() => navigation.openDrawer()}
           avatar_uri={
             user === null
-            ? ('logo_of_app')
-            : (API_URL + `/storage/images/${avatar}`)
-          }  
+              ? 'logo_of_app'
+              : API_URL + `/storage/images/${avatar}`
+          }
         />
         <Loader loading={loading} />
 

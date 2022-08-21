@@ -1,47 +1,39 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
   Alert,
-  Pressable,
+  Image,
   ImageBackground,
-  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-
 import I18n from '../i18n';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-
-import {Picker} from '@react-native-picker/picker';
-
-import RNPickerSelect from 'react-native-picker-select';
 
 import Animated from 'react-native-reanimated';
 
 import SelectDropdown from 'react-native-select-dropdown';
 
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faDonate,
-  faQuestionCircle,
   faInfoCircle,
   faLanguage,
+  faQuestionCircle,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-
-import Modal from 'react-native-modal';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import colors from '../assets/colors/colors';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import axios from 'axios';
-import API_URL from '../env';
+import {API_URL} from '../env';
 
 const DrawerContent = ({navigation}) => {
   const languages = ['fr', 'ar', 'en'];
@@ -62,12 +54,9 @@ const DrawerContent = ({navigation}) => {
     sheetRef.current.snapTo(2);
 
     AsyncStorage.getItem('user_logged_id').then(response => {
-      console.warn('id: '+response)
-      // const user_id = JSON.parse(response);
-      const user_id = response;
-      axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
-        setUser(response_user.data);
-        console.warn('data ---------->'+response_user.data);
+      axios.get(API_URL + `/user/profile/${response}`).then(res => {
+        console.log(res.data);
+        setUser(res.data);
       });
     });
   }, []);
@@ -308,9 +297,11 @@ const DrawerContent = ({navigation}) => {
                 {
                   text: 'yes',
                   onPress: () => {
-                    AsyncStorage.removeItem('user_logged_id').then(res =>
-                      navigation.navigate('Login'),
-                    );
+                    navigation.navigate('Login');
+                    AsyncStorage.removeItem('user_logged_id').then(res => {
+                      console.log(res);
+                    });
+                    console.log('********************** logout ');
                   },
                 },
               ])

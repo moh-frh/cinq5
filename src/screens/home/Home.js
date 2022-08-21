@@ -1,18 +1,24 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator, FlatList, Image, ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-
 import colors from '@app/assets/colors/colors';
-import { COLORS, FONTS, icons, SIZES } from '@app/assets/constants';
+import {COLORS, FONTS, icons, SIZES} from '@app/assets/constants';
 import categoryData from '@app/assets/data/categoryData';
 import Header from '@app/components/Header';
 import axios from 'axios';
 
-
-import { API_URL, BO_URL } from '@app/env';
+import {API_URL, BO_URL} from '@app/env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -28,24 +34,6 @@ const Home = ({navigation}) => {
   const [language, setLanguage] = useState();
 
   useEffect(() => {
-    // navigation.dispatch(
-    //   CommonActions.reset({
-    //     index: 0,
-    //     routes: [
-    //       {name: 'Home'},
-    //       {name: 'Favourite'},
-    //       {name: 'SFeature'},
-    //       {name: 'History'},
-    //       {name: 'Profile'},
-    //     ],
-    //   }),
-    // );
-    // const resetAction = StackActions.reset({
-    //   index: 0,
-    //   actions: [NavigationActions.navigate({routeName: 'MainActivity'})],
-    // });
-    // navigation.dispatch(resetAction);
-
     AsyncStorage.getItem('language').then(lang => {
       setLanguage(lang);
       axios.get(`${API_URL}/${lang}/recipes/ALL`).then(recipes => {
@@ -57,7 +45,7 @@ const Home = ({navigation}) => {
     AsyncStorage.getItem('user_logged_id').then(response => {
       // const user_id = JSON.parse(response);
       setUser(response);
-      
+
       const user_id = response;
       axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
         setAvatar(response_user.data.avatar);
@@ -181,14 +169,12 @@ const Home = ({navigation}) => {
           navigation.navigate('ItemDetails', {
             itemId: item.id,
           })
-        }
-        >
+        }>
         {/* Image */}
         <View>
-
           <Image
             source={{
-              uri: BO_URL+`/storage/recipes/${item.images[0]}`,
+              uri: BO_URL + `/storage/recipes/${item.images[0]}`,
             }}
             resizeMode="cover"
             style={styles.itemImage}
@@ -340,11 +326,11 @@ const Home = ({navigation}) => {
           search={search}
           onChangeText={value => onSearchFoods(value)}
           onPress={() => navigation.openDrawer()}
-          avatar_uri= {
+          avatar_uri={
             user === null
-            ? ('logo_of_app')
-            : (API_URL + `/storage/images/${avatar}`)
-          }  
+              ? 'logo_of_app'
+              : API_URL + `/storage/images/${avatar}`
+          }
         />
         {renderRecipeCategories()}
         {renderFoodList()}

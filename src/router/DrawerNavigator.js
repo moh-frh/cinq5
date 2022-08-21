@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import TabNavigator from './../router/TabNavigator';
-import { MainStackNavigator } from './StackNavigator';
+import {MainStackNavigator} from './StackNavigator';
 
 import History from '../screens/history/History';
 import Profile from '../screens/profile/Profile';
@@ -21,11 +21,7 @@ const DrawerNavigator = () => {
 
   useEffect(() => {
     AsyncStorage.getItem('user_logged_id').then(response => {
-      // const user_id = JSON.parse(response);
-      // console.warn('user_id: ' + response);
       response === null ? setIsLogged(false) : setIsLogged(true);
-      // axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
-      // });
     });
   }, []);
 
@@ -38,8 +34,10 @@ const DrawerNavigator = () => {
   //     <Drawer.Screen name="History" component={History} />
   //   </Drawer.Navigator>
   // ) : (
-    return (
-    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />} backBehavior='IndexDrawer'>
+  return (
+    <Drawer.Navigator
+      drawerContent={props => <DrawerContent {...props} />}
+      backBehavior="IndexDrawer">
       <Drawer.Screen name="Splash" component={Splash} />
       <Drawer.Screen name="Login" component={MainStackNavigator} />
       <Drawer.Screen name="IndexDrawer" component={TabNavigator} />

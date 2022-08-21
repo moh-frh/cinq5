@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {
-  Image, ImageBackground, StyleSheet, TextInput, TouchableOpacity, View
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import colors from '../assets/colors/colors';
-import { COLORS, icons, SIZES } from '../assets/constants';
+import {COLORS, icons, SIZES} from '../assets/constants';
 import I18n from '../i18n';
 
 import Logo from '../assets/images/logo2.png';
@@ -50,29 +55,23 @@ const Header = ({search, avatar_uri, onChangeText, onPress}) => {
               borderRadius: 50,
               borderWidth: 1,
             }}>
-              {
-                avatar_uri === 'logo_of_app'
-                ?
-                (
-                  <Image
-                    style={styles.headerImageProfile}
-                    source={Logo}
-                    resizeMode="cover"
-                  />
-                )
-                :
-                ( <Image
-                    source={{
-                    // uri: API_URL + `/storage/images/avatars/${avatar}`,
-                    //   uri: 'https://previews.123rf.com/images/dubova/dubova1502/dubova150200153/37009481-selfie-portrait-de-jeune-homme-ext%C3%A9rieur.jpg',
-                    uri: avatar_uri,
-                    }}
-                    resizeMode="cover"
-                    style={styles.headerImageProfile}
-                  />
-                )
-              }
-            
+            {avatar_uri === 'logo_of_app' ? (
+              <Image
+                style={styles.headerImageProfile}
+                source={Logo}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                source={{
+                  // uri: API_URL + `/storage/images/avatars/${avatar}`,
+                  //   uri: 'https://previews.123rf.com/images/dubova/dubova1502/dubova150200153/37009481-selfie-portrait-de-jeune-homme-ext%C3%A9rieur.jpg',
+                  uri: avatar_uri,
+                }}
+                resizeMode="cover"
+                style={styles.headerImageProfile}
+              />
+            )}
           </TouchableOpacity>
         </View>
       </View>
