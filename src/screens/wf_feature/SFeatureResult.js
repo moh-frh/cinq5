@@ -1,10 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator, FlatList, Image,
-  ImageBackground, SafeAreaView,
-  StyleSheet, Text, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 import emptyRecipes from '@app/assets/images/no-food.png';
@@ -12,11 +18,11 @@ import emptyRecipes from '@app/assets/images/no-food.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '@app/assets/colors/colors';
-import { COLORS, FONTS, icons, SIZES } from '@app/assets/constants';
-import API_URL from '@app/env';
+import {COLORS, FONTS, icons, SIZES} from '@app/assets/constants';
+import {API_URL, BO_URL} from '@app/env';
 import axios from 'axios';
 import LottieView from 'lottie-react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import Header from '@app/components/Header';
 
@@ -28,7 +34,7 @@ const SFeatureResult = ({route, navigation}) => {
   const [Aperitif, setAperitif] = useState([]);
   const [Bases, setBases] = useState([]);
   const [Desserts, setDesserts] = useState([]);
-  const [Dishes, setDishes] = useState([]);
+  // const [Dishes, setDishes] = useState([]);
 
   const [ResultCount, setResultCount] = useState(0);
 
@@ -52,7 +58,7 @@ const SFeatureResult = ({route, navigation}) => {
       setAperitif(recipes.data[2]);
       setBases(recipes.data[3]);
       setDesserts(recipes.data[4]);
-      setDishes(recipes.data[5]);
+      // setDishes(recipes.data[5]);
 
       setResultCount(
         recipes.data[0].recipes.length +
@@ -106,11 +112,11 @@ const SFeatureResult = ({route, navigation}) => {
         {/* Image */}
         <View
           style={{
-            marginBottom: SIZES.padding,
+            marginVertical: SIZES.padding,
           }}>
           <Image
             source={{
-              uri: `${API_URL}/storage/images/recipes/${item.cover}`,
+              uri: `${BO_URL}/storage/recipes/${item.cover}`,
             }}
             resizeMode="cover"
             style={styles.itemImage}
@@ -128,47 +134,83 @@ const SFeatureResult = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
               ...styles.shadow,
+
+              borderStyle: 'solid',
+              borderColor: colors.orange,
+              borderWidth: 4,
             }}>
+            <Image
+              source={icons.clock}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: colors.white,
+                marginRight: 10,
+              }}
+            />
             <Text style={styles.itemDurationText}>{item.delay} mins</Text>
           </View>
         </View>
 
         {/* food Info */}
-        <Text>{item.name}</Text>
-
         <View
           style={{
-            marginTop: SIZES.padding,
-            flexDirection: 'row',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // backgroundColor: colors.lightOrange,
+            borderBottomLeftRadius: 30,
+            borderBottomRightRadius: 30,
+            padding: '2%',
           }}>
-          {/* Rating */}
-          <Image
-            source={icons.star}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.primary,
-              marginRight: 10,
-            }}
-          />
-          <Text style={{...FONTS.body3}}>{item.rate}</Text>
-
-          {/* Categories */}
+          <View>
+            <Text numberOfLines={1} style={{...FONTS.body1}}>
+              {item.name}
+            </Text>
+          </View>
           <View
             style={{
+              marginTop: SIZES.padding,
               flexDirection: 'row',
-              marginLeft: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-            <Image
-              source={icons.user}
+            {/* Rating */}
+            <View
               style={{
-                height: 20,
-                width: 20,
-                tintColor: colors.orange,
-                marginRight: 10,
-              }}
-            />
-            <Text style={{...FONTS.body3}}>{item.nbr_persons}</Text>
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: '5%',
+              }}>
+              <Image
+                source={icons.star}
+                style={{
+                  height: 20,
+                  width: 20,
+                  tintColor: COLORS.primary,
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{...FONTS.body2}}>{item.rate}</Text>
+            </View>
+            {/* nbr persons */}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: '5%',
+              }}>
+              <Image
+                source={icons.user}
+                style={{
+                  height: 20,
+                  width: 20,
+                  tintColor: COLORS.primary,
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{...FONTS.body2}}>{item.nbr_persons}</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -191,117 +233,115 @@ const SFeatureResult = ({route, navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <ScrollView>
-          <View>
-            {Entrees?.recipes?.length +
-              Drinks?.recipes?.length +
-              Aperitif?.recipes?.length +
-              Bases?.recipes?.length +
-              Desserts?.recipes?.length +
-              Dishes?.recipes?.length ===
-            0 ? (
-              <View
+        <View>
+          {Entrees?.recipes?.length +
+            Drinks?.recipes?.length +
+            Aperitif?.recipes?.length +
+            Bases?.recipes?.length +
+            Desserts?.recipes?.length ===
+          0 ? (
+            <View
+              style={{
+                height: '50%',
+                marginBottom: '50%',
+                // backgroundColor: colors.white,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{width: 150, height: 150, margin: '20%'}}
+                source={emptyRecipes}
+              />
+              <Text
                 style={{
-                  height: '50%',
-                  marginBottom: '50%',
-                  // backgroundColor: colors.white,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  style={{width: 150, height: 150, margin: '20%'}}
-                  source={emptyRecipes}
-                />
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: 30,
-                    lineHeight: 33,
-                    fontFamily: 'Lato-Italic',
+                  fontWeight: 'bold',
+                  fontSize: 30,
+                  lineHeight: 33,
+                  fontFamily: 'Lato-Italic',
 
-                    color: colors.black,
-                  }}>
-                  Empty Result
-                </Text>
-                <Text style={{color: colors.darkGrey}}>
-                  You don't have any recipe that match with your ingredients
-                </Text>
+                  color: colors.black,
+                }}>
+                Empty Result
+              </Text>
+              <Text style={{color: colors.darkGrey}}>
+                You don't have any recipe that match with your ingredients
+              </Text>
+            </View>
+          ) : (
+            <ScrollView style={{marginBottom: 60}}>
+              <View style={{marginLeft: 15, marginBottom: 15}}>
+                {Entrees && Entrees.recipes && (
+                  <Text style={{...FONTS.body1, color: colors.orange}}>
+                    {Entrees.name} ( {Entrees.recipes.length} )
+                  </Text>
+                )}
+                <FlatList
+                  data={Entrees.recipes}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  // ListFooterComponent={renderLoader}
+                />
               </View>
-            ) : (
-              <ScrollView style={{marginBottom: 60}}>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
-                  {Entrees && Entrees.recipes && (
-                    <Text style={{...FONTS.body1, color: colors.orange}}>
-                      {Entrees.name} ( {Entrees.recipes.length} )
-                    </Text>
-                  )}
-                  <FlatList
-                    data={Entrees.recipes}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    // ListFooterComponent={renderLoader}
-                  />
-                </View>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
-                  {Drinks && Drinks.recipes && (
-                    <Text style={{...FONTS.body1, color: colors.orange}}>
-                      {Drinks.name} ( {Drinks.recipes.length} )
-                    </Text>
-                  )}
-                  <FlatList
-                    data={Drinks.recipes}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    horizontal
-                    // ListFooterComponent={renderLoader}
-                  />
-                </View>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
-                  {Aperitif && Aperitif.recipes && (
-                    <Text style={{...FONTS.body1, color: colors.orange}}>
-                      {Aperitif.name} ( {Aperitif.recipes.length} )
-                    </Text>
-                  )}
-                  <FlatList
-                    data={Aperitif.recipes}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    horizontal
-                    // ListFooterComponent={renderLoader}
-                  />
-                </View>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
-                  {Bases && Bases.recipes && (
-                    <Text style={{...FONTS.body1, color: colors.orange}}>
-                      {Bases.name} ( {Bases.recipes.length} )
-                    </Text>
-                  )}
-                  <FlatList
-                    data={Bases.recipes}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    horizontal
-                    // ListFooterComponent={renderLoader}
-                  />
-                </View>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
-                  {Desserts && Desserts.recipes && (
-                    <Text style={{...FONTS.body1, color: colors.orange}}>
-                      {Desserts.name} ( {Desserts.recipes.length} )
-                    </Text>
-                  )}
-                  <FlatList
-                    data={Desserts.recipes}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    horizontal
-                    // ListFooterComponent={renderLoader}
-                  />
-                </View>
-                <View style={{marginLeft: 15, marginBottom: 15}}>
+              <View style={{marginLeft: 15, marginBottom: 15}}>
+                {Drinks && Drinks.recipes && (
+                  <Text style={{...FONTS.body1, color: colors.orange}}>
+                    {Drinks.name} ( {Drinks.recipes.length} )
+                  </Text>
+                )}
+                <FlatList
+                  data={Drinks.recipes}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  horizontal
+                  // ListFooterComponent={renderLoader}
+                />
+              </View>
+              <View style={{marginLeft: 15, marginBottom: 15}}>
+                {Aperitif && Aperitif.recipes && (
+                  <Text style={{...FONTS.body1, color: colors.orange}}>
+                    {Aperitif.name} ( {Aperitif.recipes.length} )
+                  </Text>
+                )}
+                <FlatList
+                  data={Aperitif.recipes}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  horizontal
+                  // ListFooterComponent={renderLoader}
+                />
+              </View>
+              <View style={{marginLeft: 15, marginBottom: 15}}>
+                {Bases && Bases.recipes && (
+                  <Text style={{...FONTS.body1, color: colors.orange}}>
+                    {Bases.name} ( {Bases.recipes.length} )
+                  </Text>
+                )}
+                <FlatList
+                  data={Bases.recipes}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  horizontal
+                  // ListFooterComponent={renderLoader}
+                />
+              </View>
+              <View style={{marginLeft: 15, marginBottom: 15}}>
+                {Desserts && Desserts.recipes && (
+                  <Text style={{...FONTS.body1, color: colors.orange}}>
+                    {Desserts.name} ( {Desserts.recipes.length} )
+                  </Text>
+                )}
+                <FlatList
+                  data={Desserts.recipes}
+                  keyExtractor={item => item.id}
+                  renderItem={renderItem}
+                  horizontal
+                  // ListFooterComponent={renderLoader}
+                />
+              </View>
+              {/* <View style={{marginLeft: 15, marginBottom: 15}}>
                   {Dishes && Dishes.recipes && (
                     <Text style={{...FONTS.body1, color: colors.orange}}>
                       {Dishes.name} ( {Dishes.recipes.length} )
@@ -314,11 +354,10 @@ const SFeatureResult = ({route, navigation}) => {
                     horizontal
                     // ListFooterComponent={renderLoader}
                   />
-                </View>
-              </ScrollView>
-            )}
-          </View>
-        </ScrollView>
+                </View> */}
+            </ScrollView>
+          )}
+        </View>
       </SafeAreaView>
     );
   };
@@ -335,7 +374,7 @@ const SFeatureResult = ({route, navigation}) => {
           search="null"
           onChangeText={() => {}}
           onPress={() => navigation.openDrawer()}
-          avatar_uri={API_URL + `/storage/images/${avatar}`}
+          avatar_uri={API_URL + `/storage/images/avatars/${avatar}`}
         />
         {renderHeaderResult()}
         {renderRecipesResult()}
@@ -394,6 +433,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
   },
   itemDurationText: {color: COLORS.white, fontWeight: 'bold'},
+  itemNameText: {color: COLORS.black, fontWeight: 'bold'},
 });
 
 export default SFeatureResult;

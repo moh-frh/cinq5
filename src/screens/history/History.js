@@ -1,18 +1,24 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableHighlight, View
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
 } from 'react-native';
 
 import Header from '@app/components/Header';
 
 import I18n from '@app/i18n';
 
-import { SwipeListView } from 'react-native-swipe-list-view';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 import colors from '@app/assets/colors/colors';
-import { COLORS, icons, SIZES } from '@app/assets/constants';
-import API_URL from '@app/env';
+import {COLORS, icons, SIZES} from '@app/assets/constants';
+import {API_URL} from '@app/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -168,10 +174,10 @@ const History = ({navigation}) => {
         onChangeText={() => {}}
         onPress={() => navigation.openDrawer()}
         avatar_uri={
-            user === null
-            ? ('logo_of_app')
-            : (API_URL + `/storage/images/${avatar}`)
-          }   
+          user === null
+            ? 'logo_of_app'
+            : API_URL + `/storage/images/avatars/${avatar}`
+        }
       />
       {history.length === 0 ? (
         <View

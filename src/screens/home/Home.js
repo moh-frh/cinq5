@@ -329,7 +329,7 @@ const Home = ({navigation}) => {
           avatar_uri={
             user === null
               ? 'logo_of_app'
-              : API_URL + `/storage/images/${avatar}`
+              : API_URL + `/storage/images/avatars/${avatar}`
           }
         />
         {renderRecipeCategories()}

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -8,25 +8,25 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 import I18n from '@app/i18n';
 
 import Header from '@app/components/Header';
 
-import { SwipeListView } from 'react-native-swipe-list-view';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 import colors from '@app/assets/colors/colors';
-import { COLORS, icons, SIZES } from '@app/assets/constants';
-import API_URL from '@app/env';
+import {COLORS, icons, SIZES} from '@app/assets/constants';
+import {API_URL} from '@app/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import FavouriteImage from '@app/assets/images/favourite.png';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
-import { faTimesCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {faTimesCircle, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 const renderItem = (data, rowMap) => {
   return (
@@ -188,11 +188,10 @@ const Favourite = ({navigation}) => {
         onChangeText={() => {}}
         onPress={() => navigation.openDrawer()}
         avatar_uri={
-            user === null
-            ? ('logo_of_app')
-            : (API_URL + `/storage/images/${avatar}`)
-          }  
-        
+          user === null
+            ? 'logo_of_app'
+            : API_URL + `/storage/images/avatars/${avatar}`
+        }
       />
       {favourite.length === 0 ? (
         <View

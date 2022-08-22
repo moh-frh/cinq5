@@ -255,7 +255,7 @@ const Profile = ({navigation}) => {
           avatar_uri={
             user === null
               ? 'logo_of_app'
-              : API_URL + `/storage/images/${avatar}`
+              : API_URL + `/storage/images/avatars/${avatar}`
           }
         />
 
@@ -285,7 +285,7 @@ const Profile = ({navigation}) => {
           <>
             <View style={styles.cardHeader}>
               <Image
-                source={{uri: API_URL + `/storage/images/${avatar}`}}
+                source={{uri: API_URL + `/storage/images/avatars/${avatar}`}}
                 style={styles.drawerImage}
               />
               <View style={styles.cardInfo}>
