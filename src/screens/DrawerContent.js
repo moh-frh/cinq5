@@ -54,10 +54,12 @@ const DrawerContent = ({navigation}) => {
     sheetRef.current.snapTo(2);
 
     AsyncStorage.getItem('user_logged_id').then(response => {
-      axios.get(API_URL + `/user/profile/${response}`).then(res => {
-        console.log(res.data);
-        setUser(res.data);
-      });
+      if (response !== null) {
+        axios.get(API_URL + `/user/profile/${response}`).then(res => {
+          console.log(res.data);
+          setUser(res.data);
+        });
+      }
     });
   }, []);
 
