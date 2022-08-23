@@ -18,7 +18,7 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 import colors from '@app/assets/colors/colors';
 import {COLORS, icons, SIZES} from '@app/assets/constants';
-import {API_URL} from '@app/env';
+import {API_URL, BO_URL} from '@app/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -32,7 +32,7 @@ const renderItem = (data, rowMap) => {
           <View style={{width: '30%'}}>
             <Image
               source={{
-                uri: API_URL + `/storage/images/recipes/${data.item.image}`,
+                uri: BO_URL + `/storage/recipes/${data.item.image}`,
               }}
               style={{height: 90, borderRadius: 10}}
             />
@@ -150,17 +150,17 @@ const History = ({navigation}) => {
   const [avatar, setAvatar] = useState();
 
   useEffect(() => {
-    AsyncStorage.getItem('user_logged_id').then(response => {
-      setUser(response);
-      const user_id = response;
-      axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
-        setAvatar(response_user.data.avatar);
-      });
-      axios
-        .get(`${API_URL}/user/${user_id}/history`)
-        .then(response_favourite => {
-          setHistory(response_favourite.data);
+    AsyncStorage.getItem('user_logged_id').then(res => {
+      setUser(res);
+
+      if (res !== null) {
+        axios.get(API_URL + `/user/profile/${res}`).then(res_user => {
+          setAvatar(res_user.data.avatar);
         });
+        axios.get(`${API_URL}/user/${res}/history`).then(res_favourite => {
+          setHistory(res_favourite.data);
+        });
+      }
     });
 
     // AsyncStorage.getItem('user_logged_id').then(user_id => {
@@ -232,6 +232,7 @@ const History = ({navigation}) => {
                 backgroundColor: colors.white,
               }}>
               <SwipeListView
+                keyExtractor={history.name}
                 data={history}
                 renderItem={renderItem}
                 leftOpenValue={100}

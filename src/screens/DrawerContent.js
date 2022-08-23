@@ -154,7 +154,7 @@ const DrawerContent = ({navigation}) => {
         <View style={styles.cardHeader}>
           <Image
             source={{
-              uri: API_URL + `/storage/images/${user?.avatar}`,
+              uri: API_URL + `/storage/images/avatars/${user?.avatar}`,
             }}
             style={styles.drawerImage}
           />

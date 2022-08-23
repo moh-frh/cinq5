@@ -11,15 +11,15 @@ import {
   View,
 } from 'react-native';
 
-import I18n from '@app/i18n';
-
+import back1 from '@app/assets/images/back1.jpg';
 import Header from '@app/components/Header';
+import I18n from '@app/i18n';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
 
 import colors from '@app/assets/colors/colors';
 import {COLORS, icons, SIZES} from '@app/assets/constants';
-import {API_URL} from '@app/env';
+import {API_URL, BO_URL} from '@app/env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -36,7 +36,7 @@ const renderItem = (data, rowMap) => {
           <View style={{width: '30%'}}>
             <Image
               source={{
-                uri: API_URL + `/storage/images/recipes/${data.item.image}`,
+                uri: BO_URL + `/storage/recipes/${data.item.image}`,
               }}
               style={{height: 90, borderRadius: 10}}
             />
@@ -129,7 +129,7 @@ const HiddenItemWithActions = props => {
 };
 const renderHiddenItem = (data, rowMap) => {
   const closeRow = (rowMap, rowKey) => {
-    // console.log('-' + rowKey);
+    console.log('------' + rowKey + '+++++' + data.item.id);
     rowMap[data.item.key].closeRow();
   };
   const deleteRow = (rowMap, rowKey) => {
@@ -223,27 +223,29 @@ const Favourite = ({navigation}) => {
           </Text>
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <ImageBackground
-            source={{
-              uri: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-            }}
-            style={{width: '100%', height: '100%'}}
-            imageStyle={{opacity: 0.2}}>
+        <ImageBackground
+          source={back1}
+          style={{width: '100%', height: '100%'}}
+          imageStyle={{opacity: 0.2}}>
+          <View
+            style={{
+              height: '20%',
+              paddingBottom: '50%',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{width: 150, height: 150, marginTop: 200}}
+              source={FavouriteImage}
+            />
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={{
-                height: '20%',
-                paddingBottom: '50%',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
+                height: '100%',
+                backgroundColor: colors.white,
               }}>
-              <Image
-                style={{width: 150, height: 150, marginTop: 200}}
-                source={FavouriteImage}
-              />
-            </View>
-            <View style={{height: '80%', backgroundColor: colors.white}}>
               <SwipeListView
                 data={favourite}
                 renderItem={renderItem}
@@ -252,8 +254,8 @@ const Favourite = ({navigation}) => {
                 rightOpenValue={-150}
               />
             </View>
-          </ImageBackground>
-        </ScrollView>
+          </ScrollView>
+        </ImageBackground>
       )}
     </View>
   );

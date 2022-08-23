@@ -3,28 +3,35 @@
 /* eslint-disable prettier/prettier */
 import colors from '@app/assets/colors/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  FlatList, Image, ImageBackground, Modal,
-  Pressable, SafeAreaView,
-  StyleSheet, Text, TouchableOpacity, View
+  FlatList,
+  Image,
+  ImageBackground,
+  Modal,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import Animated from 'react-native-reanimated';
 
-import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
+import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-import { FONTS, icons, SIZES } from '@app/assets/constants';
+import {FONTS, icons, SIZES} from '@app/assets/constants';
 import axios from 'axios';
 
 import LottieView from 'lottie-react-native';
 
-import { API_URL, BO_URL } from '@app/env';
-import { Dimensions } from 'react-native';
-import { AirbnbRating } from 'react-native-ratings';
+import {API_URL, BO_URL} from '@app/env';
+import {Dimensions} from 'react-native';
+import {AirbnbRating} from 'react-native-ratings';
 
 const renderItem = ({item}) => {
   return (
@@ -54,9 +61,9 @@ const renderItem = ({item}) => {
         }}>
         <Image
           source={{
-            uri: BO_URL+`/storage/ingredients/${item.image}`
-                //  API_URL + `/storage/images/ingredients/${item.image}`,
-                // uri: 'http://192.168.9.36/selekni-core/public/storage/images/ingredients/${item.image}',
+            uri: BO_URL + `/storage/ingredients/${item.image}`,
+            //  API_URL + `/storage/images/ingredients/${item.image}`,
+            // uri: 'http://192.168.9.36/selekni-core/public/storage/images/ingredients/${item.image}',
           }}
           resizeMode="contain"
           style={{
@@ -111,20 +118,16 @@ const ItemDetails = ({route, navigation}) => {
 
   useEffect(() => {
     console.log(`${API_URL}/fr/recipes/${itemId}`);
-    
-    axios
-        .get(`${API_URL}/fr/recipes/${itemId}`)
-        .then(recipe => {
-          console.log('recipe ///////////////////////////////');
-          console.log(recipe.data[0]);
-          setSelectedItem(recipe.data[0]);
-          setFav(recipe.data[0].fav);
-        });
-  }, [])
-  
+
+    axios.get(`${API_URL}/fr/recipes/${itemId}`).then(recipe => {
+      console.log('recipe ///////////////////////////////');
+      console.log(recipe.data[0]);
+      setSelectedItem(recipe.data[0]);
+      setFav(recipe.data[0].fav);
+    });
+  }, []);
 
   useEffect(async () => {
-
     let userId = await AsyncStorage.getItem('user_logged_id');
 
     userId == null ? setUserId('no user') : setUserId(userId);
@@ -170,16 +173,13 @@ const ItemDetails = ({route, navigation}) => {
   const _responseInfoCallBack = async (error, result) => {
     console.log('_responseInfoCallBack: ');
   };
+
   const onModalRate = async rating => {
     console.log('onModalRate: ' + rating);
     setRating(rating);
     // setModalDoneVisible(!modalDoneVisible);
-    try {
-      await fbLogin(_responseInfoCallBack);
-    } catch (error) {
-      console.log('error raised', error);
-    }
   };
+
   const handleLikedRecipe = () => {
     isLiked
       ? axios.get(API_URL + '/csrf_token').then(response => {
@@ -235,7 +235,7 @@ const ItemDetails = ({route, navigation}) => {
           axios.get(API_URL + '/csrf_token').then(response => {
             let token = response.data;
             // let userId = JSON.parse(responseUser);
-            let userId = responseUser
+            let userId = responseUser;
             axios
               .post(
                 `${API_URL}/fr/recipe/${itemId}/rate/${rating}/${userId}?_token=${token}`,
@@ -488,7 +488,8 @@ const ItemDetails = ({route, navigation}) => {
                     key={index}
                     source={{
                       uri:
-                      BO_URL+`/storage/recipes/${selectedItem.images[index]}`
+                        BO_URL +
+                        `/storage/recipes/${selectedItem.images[index]}`,
                     }}
                     style={{
                       width,
@@ -525,18 +526,16 @@ const ItemDetails = ({route, navigation}) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-              
-                  <Text
-                    style={{
-                    width: '80%',
-                    fontSize: 25,
-                    fontWeight: 'bold',
-                    color: colors.white,
-                  }}>
-                    {selectedItem.name}
-                  </Text>
+            <Text
+              style={{
+                width: '80%',
+                fontSize: 25,
+                fontWeight: 'bold',
+                color: colors.white,
+              }}>
+              {selectedItem.name}
+            </Text>
 
-            
             {/* <View> */}
 
             {userId == 'no user' ? (
