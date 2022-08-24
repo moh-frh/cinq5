@@ -182,22 +182,26 @@ const ItemDetails = ({route, navigation}) => {
 
   const handleLikedRecipe = () => {
     isLiked
-      ? axios.get(API_URL + '/csrf_token').then(response => {
-          let token = response.data;
-          axios
-            .delete(
-              API_URL +
-                `/fr/user/favorites/${selectedItem.fav}/delete?_token=${token}`,
-            )
-            .then(element => {
-              setIsLiked(!isLiked);
-            });
+      ? AsyncStorage.getItem('user_logged_id').then(userId => {
+          axios.get(API_URL + '/csrf_token').then(response => {
+            let token = response.data;
+            console.warn(
+              `${API_URL}/user/${userId}/favorites/${itemId}/delete?_token=${token}`,
+            ),
+              axios
+                .post(
+                  `${API_URL}/user/${userId}/favorites/${itemId}/delete?_token=${token}`,
+                )
+                .then(element => {
+                  setIsLiked(!isLiked);
+                });
+          });
         })
-      : AsyncStorage.getItem('user_logged_id').then(responseUser => {
+      : AsyncStorage.getItem('user_logged_id').then(userId => {
           axios.get(API_URL + '/csrf_token').then(response => {
             let token = response.data;
             // let userId = JSON.parse(responseUser);
-            let userId = responseUser;
+            // let userId = responseUser;
             axios
               .post(
                 `${API_URL}/user/${userId}/favorites/${itemId}?_token=${token}`,
@@ -212,11 +216,11 @@ const ItemDetails = ({route, navigation}) => {
   const addRecipeToHistory = () => {
     console.log('done clicked !!!!');
     // api call
-    AsyncStorage.getItem('user_logged_id').then(responseUser => {
+    AsyncStorage.getItem('user_logged_id').then(userId => {
       axios.get(API_URL + '/csrf_token').then(response => {
         let token = response.data;
         // let userId = JSON.parse(responseUser);
-        let userId = responseUser;
+        // let userId = responseUser;
         axios
           .post(API_URL + `/user/${userId}/history/${itemId}?_token=${token}`)
           .then(element => {

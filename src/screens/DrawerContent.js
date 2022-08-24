@@ -25,7 +25,6 @@ import {
   faInfoCircle,
   faLanguage,
   faQuestionCircle,
-  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
@@ -209,7 +208,7 @@ const DrawerContent = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.cardTabs}
-            onPress={() => navigation.navigate('History')}>
+            onPress={() => console.log('a propos de nous')}>
             <FontAwesomeIcon
               icon={faInfoCircle}
               size={30}
@@ -278,83 +277,6 @@ const DrawerContent = ({navigation}) => {
               </Text>
             </Pressable>
           </TouchableOpacity>
-        </View>
-
-        <View style={styles.cardHeader}>
-          <FontAwesomeIcon
-            icon={faSignOutAlt}
-            size={30}
-            style={styles.cardTabsIcons}
-          />
-
-          <Pressable
-            style={styles.buttonSubmit}
-            onPress={() =>
-              Alert.alert('Confirm Logout ?', 'Are You Sure To Logout', [
-                {
-                  text: 'No',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {
-                  text: 'yes',
-                  onPress: () => {
-                    navigation.navigate('Login');
-                    AsyncStorage.removeItem('user_logged_id').then(res => {
-                      console.log(res);
-                    });
-                    console.log('********************** logout ');
-                  },
-                },
-              ])
-            }>
-            <Text style={styles.cardTitle}>{I18n.t('button_logout')}</Text>
-          </Pressable>
-
-          {/* <TouchableOpacity
-            onPress={() => {
-              Alert.alert(
-                'Language Selection',
-                'Multi language support',
-                [
-                  {
-                    text: 'French',
-                    onPress: () => {
-                      I18n.locale = 'fr-Us';
-                      // setLanguage({changeLanguage: 'English'});
-                    },
-                  },
-                  {
-                    text: 'English',
-                    onPress: () => {
-                      I18n.locale = 'en-Us';
-                      // setLanguage({changeLanguage: 'English'});
-                    },
-                  },
-                  {
-                    text: 'Arabic',
-                    onPress: () => {
-                      I18n.locale = 'ar-Us';
-                      // setLanguage({changeLanguage: 'arabic'});
-                    },
-                  },
-                  {
-                    text: 'Cancel',
-                    onPress: () => {
-                      console.log('Cancel Pressed');
-                    },
-                    style: 'cancel',
-                  },
-                ],
-                {cancelable: false},
-              );
-            }}>
-            <Text>Click Change Language</Text>
-          </TouchableOpacity> */}
-
-          {/* <View>
-            <Button title="Show modal" onPress={toggleModal} />
-          </View> */}
         </View>
 
         {/* </ImageBackground> */}

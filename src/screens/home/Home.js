@@ -53,14 +53,6 @@ const Home = ({navigation}) => {
     });
   }, [language]);
 
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     () => true,
-  //   );
-  //   return () => backHandler.remove();
-  // }, []);
-
   const onSearchFoods = text => {
     if (text) {
       const newData = all_recipes.filter(item => {
@@ -81,11 +73,12 @@ const Home = ({navigation}) => {
   };
 
   const [categories, setCategories] = useState(categoryData);
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  var categ = {};
+  categ.id = 0;
+  const [selectedCategory, setSelectedCategory] = useState(categ);
 
   function onSelectCategory(category) {
     //filter recipes by category
-
     let recipesByCategory;
 
     category.id === 0
