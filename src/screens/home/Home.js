@@ -301,7 +301,7 @@ const Home = ({navigation}) => {
           paddingHorizontal: SIZES.padding * 2,
           paddingBottom: 30,
         }}
-        // ListFooterComponent={renderLoader}
+        ListFooterComponent={renderLoader}
       />
     );
   }

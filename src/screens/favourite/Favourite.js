@@ -129,7 +129,7 @@ const HiddenItemWithActions = props => {
 };
 const renderHiddenItem = (data, rowMap) => {
   const closeRow = (rowMap, rowKey) => {
-    console.log('------' + rowKey + '+++++' + data.item.id);
+    // console.log('------' + rowKey + '+++++' + data.item.id);
     rowMap[data.item.key].closeRow();
   };
   const deleteRow = (rowMap, rowKey) => {

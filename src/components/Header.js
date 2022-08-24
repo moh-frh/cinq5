@@ -101,6 +101,9 @@ const styles = StyleSheet.create({
     borderColor: colors.orange,
     borderWidth: 1,
   },
+  search: {
+    fontSize: 20,
+  },
   headerImageProfile: {
     width: 48,
     height: 48,

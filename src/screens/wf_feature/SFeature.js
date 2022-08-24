@@ -39,7 +39,6 @@ const SFeature = ({navigation}) => {
       setUser(response);
       const user_id = response;
       axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
-        console.log(response_user.data);
         setAvatar(response_user.data.avatar);
       });
     });
@@ -95,7 +94,6 @@ const SFeature = ({navigation}) => {
       elem => (ing_id = ing_id.concat(JSON.stringify(elem.id) + ',')),
     );
 
-    console.warn(ing_id);
     setTimeout(() => {
       setloading(false);
       navigation.navigate('SFeatureResult', {ingredients: ing_id});
@@ -125,7 +123,7 @@ const SFeature = ({navigation}) => {
         <Loader loading={loading} />
 
         <View style={{height: '100%'}}>
-          <View style={{height: '10%', width: '100%', alignItems: 'center'}}>
+          <View style={{height: '5%', width: '100%', alignItems: 'center'}}>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>
               {I18n.t('select_ingredients_text')}
             </Text>
@@ -197,7 +195,7 @@ const SFeature = ({navigation}) => {
             </View>
             {/* </ScrollView> */}
           </SafeAreaView>
-          <View style={{height: '30%', padding: '5%'}}>
+          <View style={{height: '30%', paddingTop: '12%'}}>
             <View style={{alignItems: 'center'}}>
               <Pressable
                 style={styles.buttonSubmit}
@@ -258,10 +256,11 @@ const styles = StyleSheet.create({
     width: '60%',
     alignItems: 'center',
     justifyContent: 'center',
-
     backgroundColor: colors.orange,
     color: colors.darkGrey,
     borderRadius: 30,
+    borderWidth: 1,
+    borderColor: 'white',
   },
   textSubmit: {
     color: colors.white,

@@ -117,11 +117,7 @@ const ItemDetails = ({route, navigation}) => {
   const [fav, setFav] = useState();
 
   useEffect(() => {
-    console.log(`${API_URL}/fr/recipes/${itemId}`);
-
     axios.get(`${API_URL}/fr/recipes/${itemId}`).then(recipe => {
-      console.log('recipe ///////////////////////////////');
-      console.log(recipe.data[0]);
       setSelectedItem(recipe.data[0]);
       setFav(recipe.data[0].fav);
     });
@@ -165,17 +161,8 @@ const ItemDetails = ({route, navigation}) => {
     });
   }, [itemId, isLiked]);
 
-  const fbLogin = resCallBack => {
-    // LoginManager.logOut();
-    console.log('fbLogin : ');
-  };
-
-  const _responseInfoCallBack = async (error, result) => {
-    console.log('_responseInfoCallBack: ');
-  };
-
   const onModalRate = async rating => {
-    console.log('onModalRate: ' + rating);
+    // console.log('onModalRate: ' + rating);
     setRating(rating);
     // setModalDoneVisible(!modalDoneVisible);
   };
@@ -185,16 +172,13 @@ const ItemDetails = ({route, navigation}) => {
       ? AsyncStorage.getItem('user_logged_id').then(userId => {
           axios.get(API_URL + '/csrf_token').then(response => {
             let token = response.data;
-            console.warn(
-              `${API_URL}/user/${userId}/favorites/${itemId}/delete?_token=${token}`,
-            ),
-              axios
-                .post(
-                  `${API_URL}/user/${userId}/favorites/${itemId}/delete?_token=${token}`,
-                )
-                .then(element => {
-                  setIsLiked(!isLiked);
-                });
+            axios
+              .post(
+                `${API_URL}/user/${userId}/favorites/${itemId}/delete?_token=${token}`,
+              )
+              .then(element => {
+                setIsLiked(!isLiked);
+              });
           });
         })
       : AsyncStorage.getItem('user_logged_id').then(userId => {
@@ -214,7 +198,6 @@ const ItemDetails = ({route, navigation}) => {
   };
 
   const addRecipeToHistory = () => {
-    console.log('done clicked !!!!');
     // api call
     AsyncStorage.getItem('user_logged_id').then(userId => {
       axios.get(API_URL + '/csrf_token').then(response => {

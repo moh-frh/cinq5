@@ -55,7 +55,7 @@ const DrawerContent = ({navigation}) => {
     AsyncStorage.getItem('user_logged_id').then(response => {
       if (response !== null) {
         axios.get(API_URL + `/user/profile/${response}`).then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           setUser(res.data);
         });
       }
@@ -119,7 +119,7 @@ const DrawerContent = ({navigation}) => {
               data={languages}
               defaultButtonText={language}
               onSelect={(selectedItem, index) => {
-                console.log(selectedItem);
+                // console.log(selectedItem);
                 try {
                   AsyncStorage.setItem('language', selectedItem);
                 } catch (e) {}

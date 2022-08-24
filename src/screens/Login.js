@@ -430,10 +430,7 @@ const Login = ({navigation}) => {
               onPress={() => {
                 axios.get(API_URL + '/csrf_token').then(csrf => {
                   let token = csrf.data;
-                  console.warn(
-                    '********************************************** token :',
-                    token,
-                  );
+                  // console.warn('********************************************** token :',token);
                   axios({
                     method: 'post',
                     url:
@@ -446,13 +443,13 @@ const Login = ({navigation}) => {
                   })
                     .then(res => {
                       // navigation.navigate('Index')
-                      console.log(
-                        'login ************************************************************************',
-                      );
-                      console.log(res);
-                      console.log(
-                        'login ************************************************************************',
-                      );
+                      // console.log(
+                      //   'login ************************************************************************',
+                      // );
+                      // console.log(res);
+                      // console.log(
+                      //   'login ************************************************************************',
+                      // );
                       res.data !== 'email or password incorrect'
                         ? // console.warn(res.data)
                           AsyncStorage.setItem(

@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
+import {CommonActions} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
@@ -62,7 +63,6 @@ const Profile = ({navigation}) => {
       setUser(response);
       const user_id = response;
       axios.get(API_URL + `/user/profile/${user_id}`).then(response_user => {
-        console.warn('user:', response_user);
         setName(response_user.data.name);
         setEmail(response_user.data.email);
         setSex(response_user.data.sexe);
@@ -82,7 +82,6 @@ const Profile = ({navigation}) => {
         .get(API_URL + '/csrf_token')
         .then(response => {
           let token = response.data;
-          console.warn('token: ' + token);
           axios({
             method: 'patch',
             url:
@@ -104,8 +103,6 @@ const Profile = ({navigation}) => {
             },
           })
             .then(function (response) {
-              console.log('success');
-
               sheetRef.current.snapTo(2);
 
               setName(updatedName);
@@ -292,7 +289,7 @@ const Profile = ({navigation}) => {
                 {name && <Text style={styles.cardTitle}>{name}</Text>}
 
                 <Text style={styles.cardEmail}>{email}</Text>
-                <Text style={styles.cardPhone}>not-used-yet</Text>
+                {/* <Text style={styles.cardPhone}>not-used-yet</Text> */}
               </View>
             </View>
             <View style={styles.cardTabsList}>
@@ -370,6 +367,12 @@ const Profile = ({navigation}) => {
                     {
                       text: I18n.t('yes'),
                       onPress: () => {
+                        const resetAction = CommonActions.reset({
+                          index: 0,
+                          routes: [{name: 'Login'}],
+                        });
+                        navigation.dispatch(resetAction);
+
                         AsyncStorage.removeItem('user_logged_id').then(res =>
                           navigation.navigate('Login'),
                         );
