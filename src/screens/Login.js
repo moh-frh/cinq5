@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from 'react-native';
 
@@ -34,18 +35,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import SocialButton from '@app/components/SocialButton';
 
-// import NetInfo from '@react-native-community/netinfo';
 import OfflineNotice from './OfflineNotice';
-
 const Login = ({navigation}) => {
-  // const checkNetwork = () => {
-  //   NetInfo.fetch().then(state => {
-  //     // console.log('Connection type', state.type);
-  //     console.log('Connection type', state.isConnected);
-  //     setnetworkInfo(state.isConnected);
-  //   });
-  // };
-
   const [networkInfo, setnetworkInfo] = useState();
 
   const sheetRefRegister = React.useRef(0);
@@ -59,6 +50,8 @@ const Login = ({navigation}) => {
 
     // console.warn(networkInfo);
   }, [networkInfo]);
+
+  useEffect(() => {}, []);
 
   // languages :::::::::::::::::
   const [language, setLanguage] = useState('english');
@@ -257,7 +250,6 @@ const Login = ({navigation}) => {
                   axios({
                     method: 'post',
                     url:
-                      // /login?name=mohamed&token=mohamed2&email=mohamed@wassfast.dz&sexe=M&_token=M1Q0tbRi5CWHyXUE7NUZlo3y1wb8gmsD4M9QkEoy&social=LC
                       API_URL +
                       `/register?name=${name}&password=${password}&email=${email}&sexe=${gender}&_token=${token}`,
                     headers: {
@@ -266,16 +258,18 @@ const Login = ({navigation}) => {
                     },
                   })
                     .then(res => {
-                      // console.warn('-------------------------------------');
-                      // console.warn(res.data);
-                      // console.warn('--------------------------');
-
                       res.status === 201
                         ? (navigation.navigate('ConfirmPassword', {
                             user_id: res.data,
                           }),
                           AsyncStorage.setItem('user_logged_id', res.data))
-                        : console.warn('**************** error [register]');
+                        : ToastAndroid.showWithGravityAndOffset(
+                            'verify your data !',
+                            ToastAndroid.LONG,
+                            ToastAndroid.TOP,
+                            25,
+                            50,
+                          );
                     })
                     .catch(function (response) {
                       console.warn('**************** error [register]');
@@ -430,7 +424,6 @@ const Login = ({navigation}) => {
               onPress={() => {
                 axios.get(API_URL + '/csrf_token').then(csrf => {
                   let token = csrf.data;
-                  // console.warn('********************************************** token :',token);
                   axios({
                     method: 'post',
                     url:
@@ -442,24 +435,23 @@ const Login = ({navigation}) => {
                     },
                   })
                     .then(res => {
-                      // navigation.navigate('Index')
-                      // console.log(
-                      //   'login ************************************************************************',
-                      // );
-                      // console.log(res);
-                      // console.log(
-                      //   'login ************************************************************************',
-                      // );
-                      res.data !== 'email or password incorrect'
-                        ? // console.warn(res.data)
-                          AsyncStorage.setItem(
+                      JSON.stringify(res.data)
+                        ? ToastAndroid.showWithGravityAndOffset(
+                            'verify your credentials !',
+                            ToastAndroid.LONG,
+                            ToastAndroid.TOP,
+                            25,
+                            50,
+                          )
+                        : AsyncStorage.setItem(
                             'user_logged_id',
                             res.data.id,
-                          ).then(res => navigation.replace('Index'))
-                        : console.warn('email or password incorrect');
+                          ).then(res => navigation.replace('Index'));
                     })
                     .catch(function (response) {
-                      console.log(response);
+                      console.log(
+                        'response **********************************************',
+                      );
                     });
                 });
               }}
