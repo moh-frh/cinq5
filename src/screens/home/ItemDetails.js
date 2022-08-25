@@ -2,6 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import colors from '@app/assets/colors/colors';
+import I18n from '@app/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -115,13 +116,17 @@ const ItemDetails = ({route, navigation}) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const [fav, setFav] = useState();
+  const [language, setLanguage] = useState();
 
   useEffect(() => {
-    axios.get(`${API_URL}/fr/recipes/${itemId}`).then(recipe => {
-      setSelectedItem(recipe.data[0]);
-      setFav(recipe.data[0].fav);
+    AsyncStorage.getItem('language').then(lang => {
+      setLanguage(lang);
+      axios.get(`${API_URL}/${lang}/recipes/${itemId}`).then(recipe => {
+        setSelectedItem(recipe.data[0]);
+        setFav(recipe.data[0].fav);
+      });
     });
-  }, []);
+  }, [language]);
 
   useEffect(async () => {
     let userId = await AsyncStorage.getItem('user_logged_id');
@@ -582,7 +587,7 @@ const ItemDetails = ({route, navigation}) => {
           <View style={{padding: SIZES.padding * 2}}>
             {selectedItem && selectedItem.ingredients && (
               <Text style={{...FONTS.h1, fontWeight: 'bold'}}>
-                Ingredients ({selectedItem.ingredients.length})
+                {I18n.t('ingredients')} ({selectedItem.ingredients.length})
               </Text>
             )}
 
@@ -596,7 +601,9 @@ const ItemDetails = ({route, navigation}) => {
             />
           </View>
           <View style={{padding: SIZES.padding * 2}}>
-            <Text style={{...FONTS.h1, fontWeight: 'bold'}}>Steps</Text>
+            <Text style={{...FONTS.h1, fontWeight: 'bold'}}>
+              {I18n.t('steps')}
+            </Text>
 
             {/* stepper */}
           </View>
@@ -623,12 +630,14 @@ const ItemDetails = ({route, navigation}) => {
                             addRecipeToHistory();
                           }}
                           onNext={() => setActiveStep(activeStep + 1)}
-                          finishBtnText="Done"
+                          finishBtnText={I18n.t('done')}
                           nextBtnTextStyle={{color: '#FFF', fontWeight: 'bold'}}
+                          nextBtnText={I18n.t('next')}
                           previousBtnTextStyle={{
                             color: colors.darkGrey,
                             fontWeight: 'bold',
                           }}
+                          previousBtnText={I18n.t('previous')}
                           key={index}>
                           <View style={{alignItems: 'center'}} key={element.id}>
                             <Text

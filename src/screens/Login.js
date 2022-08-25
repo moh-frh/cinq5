@@ -98,7 +98,9 @@ const Login = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Name :</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  {I18n.t('name')} :
+                </Text>
                 <View
                   style={{
                     height: 40,
@@ -131,7 +133,9 @@ const Login = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Email :</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  {I18n.t('email')} :
+                </Text>
                 <View
                   style={{
                     height: 40,
@@ -158,7 +162,9 @@ const Login = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Gender :</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  {I18n.t('gender')} :
+                </Text>
                 <View
                   style={{
                     height: 40,
@@ -190,7 +196,7 @@ const Login = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                  Password :
+                  {I18n.t('password')} :
                 </Text>
                 <View
                   style={{
@@ -309,7 +315,9 @@ const Login = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Email :</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  {I18n.t('email')} :
+                </Text>
                 <View
                   style={{
                     height: 40,
@@ -337,7 +345,7 @@ const Login = ({navigation}) => {
                   alignItems: 'center',
                 }}>
                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                  Password :
+                  {I18n.t('password')} :
                 </Text>
                 <View
                   style={{
@@ -364,7 +372,9 @@ const Login = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Sexe :</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  {I18n.t('sexe')} :
+                </Text>
                 <View
                   style={{
                     height: 40,
@@ -392,7 +402,7 @@ const Login = ({navigation}) => {
                       fontWeight: 'bold',
                       fontSize: 20,
                     }}>
-                    forgot Password
+                    {I18n.t('forgot_password')}
                   </Text>
                 </Pressable>
               </View>
@@ -436,17 +446,17 @@ const Login = ({navigation}) => {
                   })
                     .then(res => {
                       JSON.stringify(res.data)
-                        ? ToastAndroid.showWithGravityAndOffset(
+                        ? AsyncStorage.setItem(
+                            'user_logged_id',
+                            res.data.id,
+                          ).then(res => navigation.replace('Index'))
+                        : ToastAndroid.showWithGravityAndOffset(
                             'verify your credentials !',
                             ToastAndroid.LONG,
                             ToastAndroid.TOP,
                             25,
                             50,
-                          )
-                        : AsyncStorage.setItem(
-                            'user_logged_id',
-                            res.data.id,
-                          ).then(res => navigation.replace('Index'));
+                          );
                     })
                     .catch(function (response) {
                       console.log(
@@ -546,7 +556,8 @@ const Login = ({navigation}) => {
               borderBottomWidth: 1,
               borderBottomColor: colors.lightOrange,
             }}>
-            hey, welcome to <Text style={{color: colors.orange}}>`cinq5`</Text>
+            {I18n.t('welcome_msg')}{' '}
+            <Text style={{color: colors.orange}}>`{I18n.t('app_name')}`</Text>
           </Text>
         </View>
         <View

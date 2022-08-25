@@ -1,8 +1,22 @@
 export default {
+  // :::::: app general info
+  app_name: 'cinq5',
+  email: 'email',
+  password: 'password',
+  sexe: 'sexe',
+  forgot_password: 'forgot_password',
+  steps: 'steps',
+  ingredients: 'ingredients',
+  next: 'next',
+  previous: 'previous',
+  done: 'done',
+  min: 'min',
+
   // :::::: login page
   button_fb_login: 'Facebook Login',
   button_enter_without_login: 'Enter Without Login',
   button_change_language: 'Change Language',
+  welcome_msg: 'hey, welcome to',
 
   // :::::: favorites page
   no_favorite_text: 'No Favorites',
@@ -46,10 +60,21 @@ export default {
   login: 'Login',
   register: 'Register',
   translate: 'Translate',
-  
+
   //::::::::::: profile ::::::::::::::::::::::
   phone_number_not_set: 'phone_number_not_set',
   email_not_set: 'email_not_set',
   country_not_set: 'country_not_set',
   sexe_not_set: 'sexe_not_set',
+  you_are_not_logged: 'you_are_not_logged',
+
+  //::::::::::: categories ::::::::::::::::::::::
+  all: 'All',
+  entries: 'entries',
+  Drinks: 'Drinks',
+  Aperitif: 'Aperitif',
+  Bases: 'Bases',
+  Desserts: 'Desserts',
+  Dishes: 'Dishes',
+  plate: 'plate',
 };

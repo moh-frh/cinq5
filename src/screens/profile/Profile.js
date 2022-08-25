@@ -270,7 +270,7 @@ const Profile = ({navigation}) => {
               <Text
                 style={styles.cardTitle}
                 styles={{justifyContent: 'center'}}>
-                you are not logged
+                {I18n.t('you_are_not_logged')}
               </Text>
             </View>
             <ButtonSubmit

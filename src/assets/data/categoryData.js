@@ -1,46 +1,47 @@
 /* eslint-disable prettier/prettier */
-import {icons} from '../constants';
+import {icons} from '@app/assets/constants';
+import I18n from '@app/i18n';
 
 const categoryData = [
   {
     id: 0,
-    name: 'All',
+    name: I18n.t('all'),
     icon: icons.allFoods,
   },
   {
     id: 1,
-    name: 'Entrees',
+    name: I18n.t('entries'),
     icon: icons.entrees,
   },
   {
     id: 2,
-    name: 'Boissons',
+    name: I18n.t('Drinks'),
     icon: icons.drink,
   },
   {
     id: 3,
-    name: 'Apéritif',
+    name: I18n.t('Aperitif'),
     icon: icons.aperitif,
   },
   {
     id: 4,
-    name: 'Bases',
+    name: I18n.t('Bases'),
     icon: icons.bases,
   },
   {
     id: 5,
-    name: 'Desserts',
+    name: I18n.t('Desserts'),
     icon: icons.desserts,
   },
   {
     id: 6,
-    name: 'Plats',
+    name: I18n.t('Dishes'),
     icon: icons.plats,
   },
 
   {
     id: 9,
-    name: 'assiette',
+    name: I18n.t('plate'),
     icon: icons.assiette,
   },
 ];
