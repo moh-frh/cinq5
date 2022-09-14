@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "418744127926",
+    "project_id": "wassafast-login",
+    "storage_bucket": "wassafast-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418744127926:android:ea7a86d6e31372cfe9b117",
+        "android_client_info": {
+          "package_name": "com.appselekni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418744127926-9o80284u29vr6jfvkgddufchmufjkgh6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appselekni",
+            "certificate_hash": "71793a85b53d1313737cb4886ca551edea174b11"
+          }
+        },
+        {
+          "client_id": "418744127926-ma32dob1642bvq8q59p4pgmvtl9ll9d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWhuKpVlHD5dm7L9noTj99pTAjvAX_jt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418744127926-ma32dob1642bvq8q59p4pgmvtl9ll9d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
