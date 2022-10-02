@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   headerImageProfile: {
-    width: 48,
+    width: 20,
     height: 48,
     borderRadius: 48 / 2,
     paddingRight: SIZES.padding * 5,

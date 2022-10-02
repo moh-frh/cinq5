@@ -65,7 +65,7 @@ const Login = ({navigation}) => {
   const [passwordLogin, setPasswordLogin] = useState('');
   const [sexeLogin, setSexeLogin] = useState('');
 
-  const renderContent = () => (
+  const renderContentRegister = () => (
     <View style={{backgroundColor: 'white'}}>
       <ImageBackground
         source={back2}
@@ -113,6 +113,7 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    color="black"
                     placeholder="mohamed"
                     autoCapitalize="none"
                     style={styles.textInput}
@@ -148,6 +149,7 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    color="black"
                     placeholder="mohamed@gmail.com"
                     style={styles.textInput}
                     autoCapitalize="none"
@@ -177,6 +179,7 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    color="black"
                     placeholder="F / M"
                     style={styles.textInput}
                     onChangeText={text => setGender(text)}
@@ -210,6 +213,8 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    secureTextEntry={true}
+                    color="black"
                     placeholder="********"
                     style={styles.textInput}
                     autoCapitalize="none"
@@ -330,6 +335,7 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    color="black"
                     placeholder="mohamed@gmail.com"
                     style={styles.textInput}
                     autoCapitalize="none"
@@ -359,6 +365,8 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    secureTextEntry={true}
+                    color="black"
                     placeholder="********"
                     style={styles.textInput}
                     autoCapitalize="none"
@@ -387,6 +395,7 @@ const Login = ({navigation}) => {
                     justifyContent: 'center',
                   }}>
                   <TextInput
+                    color="black"
                     placeholder="male / female"
                     style={styles.textInput}
                     onChangeText={text => setSexeLogin(text)}
@@ -494,6 +503,7 @@ const Login = ({navigation}) => {
         shadowOpacity: 0.4,
         paddingTop: 20,
         borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
       }}>
       <View style={{alignItems: 'center'}}>
         <View
@@ -513,15 +523,15 @@ const Login = ({navigation}) => {
     <View style={styles.container}>
       <BottomSheet
         ref={sheetRefRegister}
-        snapPoints={[520, 300, 0]}
+        snapPoints={['65%', 300, 0]}
         renderHeader={renderModalHeader}
-        renderContent={renderContent}
+        renderContent={renderContentRegister}
         initialSnap={1}
         enabledGestureInteraction={true}
       />
       <BottomSheet
         ref={sheetRefLogin}
-        snapPoints={[450, 300, 0]}
+        snapPoints={['50%', 300, 0]}
         renderHeader={renderModalHeader}
         renderContent={renderContentLogin}
         initialSnap={1}
@@ -546,7 +556,7 @@ const Login = ({navigation}) => {
       </View>
 
       <View style={styles.containerLogin}>
-        <View style={{marginBottom: '10%'}}>
+        <View style={{marginBottom: '1%'}}>
           <Text
             style={{
               color: colors.darkGrey,
@@ -565,6 +575,7 @@ const Login = ({navigation}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            marginBottom: '1%',
           }}>
           <SocialButton
             buttonTitle={I18n.t('login')}
@@ -679,7 +690,6 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-
     flexDirection: 'column',
     alignItems: 'center',
     height: '100%',
